@@ -22,17 +22,25 @@ const choreSchema = new Schema({
   username: {
     type: String,
   },
-  assignedTo:{
-    type:String,
+  assignedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  assignedTo: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Member",
   },
-   createdOn:{
-    type:Date,
-    default:Date.now
-   },
-   completed:{type:Boolean},
+  createdOn: {
+    type: Date,
+    default: Date.now,
+  },
+  description: String,
+  dueDate: Date,
+  status: {
+    type: String,
+    enum: ["pending", "completed"],
+    default: "pending",
+  },
 
-   likedUser:[{type:Schema.Types.ObjectId, ref:"User"}],
-   disLikedUser:[{type:Schema.Types.ObjectId, ref:"User"}],
+  likedUser: [{ type: Schema.Types.ObjectId, ref: "User" }],
+  disLikedUser: [{ type: Schema.Types.ObjectId, ref: "User" }],
 });
 
-module.exports = mongoose.model("Chore",choreSchema)
+module.exports = mongoose.model("Chore", choreSchema);

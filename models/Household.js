@@ -15,8 +15,13 @@ const householdSchema = new Schema({
       validate: [arrayLimit, "{PATH} exceeds the limit of 5"],
     },
   ],
+  pendingInvites: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Member",
+    },
+  ],
   houseMembersChores: [{ type: Schema.Types.ObjectId, ref: "Chore" }],
-  
 });
 
 //limits the number of household member to 5

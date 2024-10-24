@@ -3,7 +3,9 @@ const jwt = require("jsonwebtoken");
 //Middleware top authenticate the user using JWT
 
 const authenticate = (req, res, next) => {
-  const token = req.header("Authorization")?.replace("Bearer", "");
+  const token = req.header("Authorization")?.replace("Bearer ", "").trim();
+  console.log("token received",token)
+
 
   if (!token) {
     return res
