@@ -19,17 +19,15 @@ authRouter.post("/signup", async (req, res) => {
     const newUser = new User({ username, password });
     await newUser.save();
 
-
     //Creates member associated with the logged in user
     const newMember = new Member({
       memberName: username,
-      user: newUser._id //associates the user with the Member
-    
-    })
+      user: newUser._id, //associates the user with the Member
+    });
 
     await newMember.save();
     //Generate a token for the new user
-     
+
     //
 
     // console.log("Signup route reached");
@@ -38,7 +36,7 @@ authRouter.post("/signup", async (req, res) => {
 
     // Generate a token for the new user
     const token = jwt.sign({ userId: newUser._id }, SECRET, {
-      expiresIn: "1h",
+      expiresIn: "35d", //35d for testing will change back to 1h after test are completed
     });
 
     // Send the response with the token and the user data
@@ -48,7 +46,7 @@ authRouter.post("/signup", async (req, res) => {
     res.status(500).send({ message: "Internal server error", error });
   }
 });
-    //
+//
 
 // Login Route
 authRouter.post("/login", async (req, res) => {

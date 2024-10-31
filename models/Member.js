@@ -9,7 +9,8 @@ const memberSchema = new Schema({
     household:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Household",
-        required: true
+        // required:true
+       
     },
     user:{// Reference to the User model (logged-in user)
       type: mongoose.Schema.Types.ObjectId,

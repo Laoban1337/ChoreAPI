@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
-// const { schema, validate } = require("./User");
 const Schema = mongoose.Schema;
+
+// Function to limit the number of household members to 5
+const arrayLimit = (val) => val.length <= 5;
 
 const householdSchema = new Schema({
   houseName: {
@@ -8,25 +10,23 @@ const householdSchema = new Schema({
     required: true,
     lowercase: true,
   },
-  houseMembers: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "User",
-      validate: [arrayLimit, "{PATH} exceeds the limit of 5"],
-    },
-  ],
+  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  houseMembers: {
+    type: [
+      {
+        userId: { type: Schema.Types.ObjectId, ref: "User" },
+        role: { type: String, enum: ["head", "member"], required: true },
+      },
+    ],
+    validate: [arrayLimit, "{PATH} exceeds the limit of 5"], // Move validate here
+  },
   pendingInvites: [
     {
-      type: Schema.Types.ObjectId,
-      ref: "Member",
+        userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        username: { type: String },
     },
-  ],
+],
   houseMembersChores: [{ type: Schema.Types.ObjectId, ref: "Chore" }],
 });
-
-//limits the number of household member to 5
-function arrayLimit(val) {
-  return val.length <= 5;
-}
 
 module.exports = mongoose.model("Household", householdSchema);

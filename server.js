@@ -12,7 +12,7 @@ const SECRET = process.env.SECRET;
 //middleware
 app.use(express.json());
 app.use(morgan("dev"));
-app.use(authenticate)
+// app.use(authenticate)
 
 //database connect
 mongoose
